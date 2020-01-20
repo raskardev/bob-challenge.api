@@ -20,10 +20,10 @@ module.exports = ({ User }) => {
     try {
       const existingUser = await User.findById(id);
       if (!existingUser) {
-        return {
-          code: "users.findById",
+        const err = {
           message: "User not found",
         };
+        throw err;
       }
 
       return {
@@ -32,7 +32,7 @@ module.exports = ({ User }) => {
     } catch (error) {
       const err = {
         code: "users.findById",
-        message: error,
+        message: error.message || error,
       };
       throw err;
     }
@@ -44,10 +44,11 @@ module.exports = ({ User }) => {
       const validation = createUserValidator(userToBeCreated);
 
       if (validation.error) {
-        return {
-          code: "users.create",
+        const err = {
+          code: "validation.error",
           message: validation.error,
         };
+        throw err;
       }
 
       const createdUser = await User.create(userToBeCreated);
@@ -56,8 +57,8 @@ module.exports = ({ User }) => {
       };
     } catch (error) {
       const err = {
-        code: "users.create",
-        message: error,
+        code: error.code || "users.create",
+        message: error.message || error,
       };
       throw err;
     }
@@ -69,10 +70,18 @@ module.exports = ({ User }) => {
       const validation = updateUserValidator(userToBeUpdated);
 
       if (validation.error) {
-        return {
-          code: "users.update",
+        const err = {
           message: validation.error,
         };
+        throw err;
+      }
+
+      const existingUser = await User.findById(id);
+      if (!existingUser) {
+        const err = {
+          message: "User not found",
+        };
+        throw err;
       }
 
       const updatedUser = await User.findByIdAndUpdate(id, userToBeUpdated);
@@ -82,7 +91,7 @@ module.exports = ({ User }) => {
     } catch (error) {
       const err = {
         code: "users.update",
-        message: error,
+        message: error.message || error,
       };
       throw err;
     }
@@ -90,6 +99,14 @@ module.exports = ({ User }) => {
 
   const remove = async (id) => {
     try {
+      const existingUser = await User.findById(id);
+
+      if (!existingUser) {
+        const err = {
+          message: "User not found",
+        };
+        throw err;
+      }
       const deletedUser = await User.findByIdAndDelete(id);
       return {
         data: deletedUser,
@@ -97,7 +114,7 @@ module.exports = ({ User }) => {
     } catch (error) {
       const err = {
         code: "users.remove",
-        message: error,
+        message: error.message || error,
       };
       throw err;
     }
