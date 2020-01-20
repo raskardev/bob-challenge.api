@@ -22,6 +22,7 @@ describe("Users tests", () => {
     await db.User.deleteMany({});
   });
   after(async () => {
+    await db.User.deleteMany({});
     await db.close();
   });
 
