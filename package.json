@@ -1,0 +1,19 @@
+{
+  "name": "bob-challenge.api",
+  "version": "0.0.1",
+  "description": "API for BoB coding challenge",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "author": "Alex Copero <alexcdev95@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1"
+  }
+}
