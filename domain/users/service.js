@@ -90,7 +90,7 @@ module.exports = ({ User }) => {
 
   const remove = async (id) => {
     try {
-      const deletedUser = await User.findByIdAndRemove(id);
+      const deletedUser = await User.findByIdAndDelete(id);
       return {
         data: deletedUser,
       };
