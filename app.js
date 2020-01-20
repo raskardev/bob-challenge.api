@@ -5,6 +5,8 @@ const morgan = require("morgan");
 
 const { start } = require("./db");
 
+const usersRouter = require("./domain/users/routes");
+
 const app = express();
 
 const morganFormat = process.env.NODE_ENV === "development" ? "dev" : "tiny";
@@ -14,6 +16,8 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan(morganFormat));
+
+app.use("/users", usersRouter);
 
 const main = async () => {
   await start();
