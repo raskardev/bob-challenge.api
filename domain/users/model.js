@@ -3,6 +3,7 @@ const { Schema, model } = require("mongoose");
 const userSchema = new Schema(
   {
     name: String,
+    flightId: String,
     bags: Number,
   },
   {
